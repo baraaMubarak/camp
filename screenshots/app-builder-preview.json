@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "مخيم السلطان 1 – شمال غزة",
+      "hasCanvas": false,
+      "bodyTextLen": 7044,
+      "bodyTextHash": "54f875612d678fe5aebc248bf21d72c1213c3de5eead77a3565efd946856b6b1",
+      "bodyTextPrefix": "مخيم السلطان 1 شمال غزة عن المخيم الأرقام الاحتياجات كيف تساعد ا",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "مخيم السلطان 1 – شمال غزة",
+      "hasCanvas": false,
+      "bodyTextLen": 7009,
+      "bodyTextHash": "f8874d1784faa5c48f2bbd80ab3f5416198a3542e9635de0de1c6593cddab911",
+      "bodyTextPrefix": "مخيم السلطان 1 شمال غزة فتح القائمة رسم توضيحي — ليس صورة حقيقية",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}
