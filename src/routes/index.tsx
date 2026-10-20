@@ -11,7 +11,7 @@ export const Route = createFileRoute("/")({
       { title: `${SITE.name} – ${SITE.place}` },
       {
         name: "description",
-        content: `${SITE.slogan} موقع يعرّف باحتياجات مخيم السلطان 1 في بيت لاهيا، شمال غزة.`,
+        content: `${SITE.slogan} موقع يعرّف باحتياجات مخيم المجد والإحسان في بيت لاهيا، شمال غزة.`,
       },
     ],
   }),
