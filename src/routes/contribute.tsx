@@ -19,12 +19,12 @@ export const Route = createFileRoute("/contribute")({
     return { need, mode };
   },
   loader: () => getPublicCamp(),
-  head: ({ loaderData }) => ({
+  head: () => ({
     meta: [
-      { title: `المساهمة – ${loaderData?.campName ?? SITE.name}` },
+      { title: `المساهمة – ${SITE.name}` },
       {
         name: "description",
-        content: `كن سببًا في تخفيف معاناة أسرة. المساهمة في ${loaderData?.campName ?? SITE.name} دون نشر بيانات الأسر.`,
+        content: "كن سببًا في تخفيف معاناة أسرة. المساهمة في مخيم السلطان 1 دون نشر بيانات الأسر.",
       },
     ],
   }),
@@ -52,7 +52,7 @@ function ContributePage() {
 
   const needLabel = need === "general" ? "احتياجات المخيم العامة" : categoryLabel(need);
   const needCopy = NEEDS.find((item) => item.id === need);
-  const message = `أود المساهمة في ${camp.campName} – ${SITE.place}، في مجال ${needLabel}. كيف يمكنني المساعدة بما يناسب الاحتياج الفعلي؟`;
+  const message = `أود المساهمة في ${SITE.name} – ${SITE.place}، في مجال ${needLabel}. كيف يمكنني المساعدة بما يناسب الاحتياج الفعلي؟`;
 
   const channels =
     mode === "inkind"
@@ -61,7 +61,7 @@ function ContributePage() {
 
   async function share() {
     const url = window.location.origin;
-    const payload = { title: camp.campName, text: `${SITE.slogan}\n${message}`, url };
+    const payload = { title: SITE.name, text: `${SITE.slogan}\n${message}`, url };
     try {
       if (navigator.share) {
         await navigator.share(payload);
@@ -88,7 +88,7 @@ function ContributePage() {
   }
 
   return (
-    <Shell campName={camp.campName}>
+    <Shell>
       <main id="content" className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
         <PageIntro kicker="قسم التبرع" title="كن سببًا في تخفيف معاناة أسرة">
           <p>
@@ -202,7 +202,7 @@ function ContributePage() {
                   {channel.kind === "email" ? (
                     <a
                       className="mt-2 inline-flex h-12 items-center text-base font-semibold text-clay"
-                      href={`mailto:${channel.value}?subject=${encodeURIComponent(`مساهمة – ${camp.campName}`)}&body=${encodeURIComponent(message)}`}
+                      href={`mailto:${channel.value}?subject=${encodeURIComponent(`مساهمة – ${SITE.name}`)}&body=${encodeURIComponent(message)}`}
                     >
                       {channel.value}
                     </a>

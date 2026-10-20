@@ -22,8 +22,6 @@ function familyFace(stats: Stats): { label: string; value: number | null; note?:
 }
 
 export function HomeView({ camp }: { camp: PublicCamp }) {
-  const name = camp.campName;
-  const named = (text: string) => text.replaceAll(SITE.name, name);
   const family = familyFace(camp.stats);
   const heroStats = [
     family,
@@ -60,11 +58,11 @@ export function HomeView({ camp }: { camp: PublicCamp }) {
 
         <div className="rise lg:col-span-5">
           <p className="text-sm font-medium text-moss">
-            {name} · بيت لاهيا
+            {SITE.name} · بيت لاهيا
           </p>
           <h1 className="mt-3 font-display text-4xl leading-tight text-cream sm:text-5xl">{SITE.heroTitle}</h1>
           <p className="mt-4 font-display text-xl italic leading-relaxed text-clay">{SITE.slogan}</p>
-          <p className="mt-4 text-base leading-relaxed text-muted">{named(HERO_PARAS[0])}</p>
+          <p className="mt-4 text-base leading-relaxed text-muted">{HERO_PARAS[0]}</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               to="/contribute"
@@ -91,7 +89,7 @@ export function HomeView({ camp }: { camp: PublicCamp }) {
 
       <div className="mx-auto max-w-3xl space-y-4 px-4 pb-4 text-base leading-relaxed text-muted sm:px-6">
         {HERO_PARAS.slice(1).map((para) => (
-          <p key={para}>{named(para)}</p>
+          <p key={para}>{para}</p>
         ))}
       </div>
 
@@ -144,10 +142,10 @@ export function HomeView({ camp }: { camp: PublicCamp }) {
         </figure>
         <div>
           <p className="text-sm font-medium text-clay">عن المخيم</p>
-          <h2 className="mt-3 font-display text-4xl leading-tight">{name}... حكايات من قلب شمال غزة</h2>
+          <h2 className="mt-3 font-display text-4xl leading-tight">مخيم السلطان 1... حكايات من قلب شمال غزة</h2>
           <div className="mt-5 space-y-4 text-base leading-relaxed text-muted">
             {ABOUT_PARAS.map((para) => (
-              <p key={para.slice(0, 24)}>{named(para)}</p>
+              <p key={para.slice(0, 24)}>{para}</p>
             ))}
           </div>
         </div>
@@ -161,7 +159,7 @@ export function HomeView({ camp }: { camp: PublicCamp }) {
           </blockquote>
           <blockquote>
             <p className="text-sm font-semibold text-moss">الرسالة</p>
-            <p className="mt-3 text-base leading-relaxed text-muted">{named(MISSION)}</p>
+            <p className="mt-3 text-base leading-relaxed text-muted">{MISSION}</p>
           </blockquote>
         </div>
       </section>

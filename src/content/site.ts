@@ -1,7 +1,7 @@
-import { DEFAULT_CAMP_NAME, type CategoryId } from "@/lib/camp-types";
+import type { CategoryId } from "@/lib/camp-types";
 
 export const SITE = {
-  name: DEFAULT_CAMP_NAME,
+  name: "مخيم السلطان 1",
   nameEn: "Al-Sultan Camp 1",
   place: "شمال غزة",
   location: "منطقة السلاطين، بيت لاهيا، شمال قطاع غزة",

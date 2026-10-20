@@ -1,16 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AdminPanel } from "@/components/admin-panel";
 import { Shell } from "@/components/site-chrome";
-import { getGuardStatus, getPublicCamp } from "@/lib/camp.functions";
+import { SITE } from "@/content/site";
+import { getGuardStatus } from "@/lib/camp.functions";
 
 export const Route = createFileRoute("/idara")({
-  loader: async () => {
-    const [guard, camp] = await Promise.all([getGuardStatus(), getPublicCamp()]);
-    return { claimed: guard.claimed, campName: camp.campName };
-  },
-  head: ({ loaderData }) => ({
+  loader: () => getGuardStatus(),
+  head: () => ({
     meta: [
-      { title: `لوحة الإدارة – ${loaderData?.campName ?? "مخيم السلطان 1"}` },
+      { title: `لوحة الإدارة – ${SITE.name}` },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -20,7 +18,7 @@ export const Route = createFileRoute("/idara")({
 function IdaraPage() {
   const guard = Route.useLoaderData();
   return (
-    <Shell campName={guard.campName}>
+    <Shell>
       <main id="content">
         <AdminPanel claimed={guard.claimed} />
       </main>

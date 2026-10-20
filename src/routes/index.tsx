@@ -6,12 +6,12 @@ import { getPublicCamp } from "@/lib/camp.functions";
 
 export const Route = createFileRoute("/")({
   loader: () => getPublicCamp(),
-  head: ({ loaderData }) => ({
+  head: () => ({
     meta: [
-      { title: `${loaderData?.campName ?? SITE.name} – ${SITE.place}` },
+      { title: `${SITE.name} – ${SITE.place}` },
       {
         name: "description",
-        content: `${SITE.slogan} موقع يعرّف باحتياجات ${loaderData?.campName ?? SITE.name} في بيت لاهيا، شمال غزة.`,
+        content: `${SITE.slogan} موقع يعرّف باحتياجات مخيم السلطان 1 في بيت لاهيا، شمال غزة.`,
       },
     ],
   }),
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/")({
 function Home() {
   const camp = Route.useLoaderData();
   return (
-    <Shell campName={camp.campName}>
+    <Shell>
       <HomeView camp={camp} />
     </Shell>
   );

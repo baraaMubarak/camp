@@ -1,17 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageIntro, Shell } from "@/components/site-chrome";
-import { PRIVACY_RULES } from "@/content/site";
-import { DEFAULT_CAMP_NAME } from "@/lib/camp-types";
+import { PRIVACY_RULES, SITE } from "@/content/site";
 import { getPublicCamp } from "@/lib/camp.functions";
 
 export const Route = createFileRoute("/privacy")({
   loader: () => getPublicCamp(),
-  head: ({ loaderData }) => ({
+  head: () => ({
     meta: [
-      { title: `الخصوصية – ${loaderData?.campName ?? DEFAULT_CAMP_NAME}` },
+      { title: `الخصوصية – ${SITE.name}` },
       {
         name: "description",
-        content: `ضوابط نشر البيانات في موقع ${loaderData?.campName ?? DEFAULT_CAMP_NAME}: لا أسماء، ولا هويات، ولا بيانات أطفال.`,
+        content: "ضوابط نشر البيانات في موقع مخيم السلطان 1: لا أسماء، ولا هويات، ولا بيانات أطفال.",
       },
     ],
   }),
@@ -22,7 +21,7 @@ function PrivacyPage() {
   const camp = Route.useLoaderData();
 
   return (
-    <Shell campName={camp.campName}>
+    <Shell>
       <main id="content">
         <PageIntro kicker="الثقة" title="الخصوصية وحفظ الكرامة">
           <p>
