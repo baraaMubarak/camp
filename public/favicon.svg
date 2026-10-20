@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="مخيم السلطان 1">
+  <rect width="32" height="32" rx="6" fill="#2F4636"/>
+  <path fill="#F3EEE4" d="M3 26.5 12 7.5 21 26.5Z"/>
+  <path fill="#1C1915" d="M10.25 26.5v-6.7c0-.8.8-1.35 1.75-1.35s1.75.55 1.75 1.35v6.7Z"/>
+  <circle cx="25.15" cy="12.1" r="3.35" fill="#E7C27A"/>
+</svg>
