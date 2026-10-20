@@ -1,3 +1,4 @@
+import { useRouter } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import {
   addAidEntry,
@@ -233,6 +234,8 @@ function SettingsForm({
   const [published, setPublished] = useState(camp.statsPublished);
   const [note, setNote] = useState(camp.publicNote);
   const [notePublished, setNotePublished] = useState(camp.notePublished);
+  const [campName, setCampName] = useState(camp.campName);
+  const router = useRouter();
 
   function setField(key: keyof Stats, value: string) {
     setDraft((prev) => ({ ...prev, [key]: value }));
@@ -255,6 +258,11 @@ function SettingsForm({
       onError("تاريخ التحديث غير صالح.");
       return;
     }
+    const name = campName.trim();
+    if (name.length < 2 || name.length > 60) {
+      onError("اسم المخيم من حرفين إلى ٦٠ حرفًا.");
+      return;
+    }
     onBusy(true);
     const result = await call(() =>
       saveCampSettings({
@@ -274,6 +282,7 @@ function SettingsForm({
           statsPublished: published,
           publicNote: note,
           notePublished,
+          campName: name,
         },
       }),
     );
@@ -283,11 +292,25 @@ function SettingsForm({
       return;
     }
     onCamp(result.data);
-    onNotice(published ? "نُشرت الأرقام للزوار." : "حُفظت الأرقام دون نشرها.");
+    await router.invalidate();
+    onNotice("تم حفظ اسم المخيم والبيانات.");
   }
 
   return (
     <form onSubmit={(event) => void submit(event)} className="grid gap-4 rounded-2xl border border-line bg-panel p-5">
+      <h2 className="font-display text-3xl">اسم المخيم</h2>
+      <label className="grid gap-1 text-sm" htmlFor="camp-name">
+        <span>تعديل اسم المخيم</span>
+        <span className="text-xs text-muted">يظهر في الترويسة والتذييل وعنوان الصفحات بعد الحفظ.</span>
+        <input
+          id="camp-name"
+          value={campName}
+          maxLength={60}
+          required
+          onChange={(event) => setCampName(event.target.value)}
+          className={inputClass}
+        />
+      </label>
       <h2 className="font-display text-3xl">الأرقام</h2>
       <div className="grid gap-4 sm:grid-cols-2">
         {STAT_FIELDS.map((field) => (

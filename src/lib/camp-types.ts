@@ -51,7 +51,10 @@ export type ChannelItem = {
   published: boolean;
 };
 
+export const DEFAULT_CAMP_NAME = "مخيم السلطان 1";
+
 export type PublicCamp = {
+  campName: string;
   statsPublished: boolean;
   stats: Stats;
   note: string | null;
@@ -61,6 +64,7 @@ export type PublicCamp = {
 
 export type AdminCamp = {
   claimed: boolean;
+  campName: string;
   statsPublished: boolean;
   stats: Stats;
   publicNote: string;
@@ -84,6 +88,7 @@ export const EMPTY_STATS: Stats = {
 };
 
 export const EMPTY_PUBLIC: PublicCamp = {
+  campName: DEFAULT_CAMP_NAME,
   statsPublished: false,
   stats: EMPTY_STATS,
   note: null,

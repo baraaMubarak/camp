@@ -21,22 +21,22 @@ function Mark({ className }: { className?: string }) {
   );
 }
 
-export function Shell({ children }: { children: ReactNode }) {
+export function Shell({ children, campName = SITE.name }: { children: ReactNode; campName?: string }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const hideBar = path.startsWith("/idara");
 
   return (
     <div className="min-h-screen bg-night text-cream">
       <div className="h-1 bg-clay" />
-      <Header />
+      <Header campName={campName} />
       <div className={hideBar ? "" : "pb-24 md:pb-0"}>{children}</div>
-      <Footer />
+      <Footer campName={campName} />
       {hideBar ? null : <MobileContribute />}
     </div>
   );
 }
 
-function Header() {
+function Header({ campName }: { campName: string }) {
   const [open, setOpen] = useState(false);
   const path = useRouterState({ select: (s) => s.location.pathname + s.location.hash });
 
@@ -52,7 +52,7 @@ function Header() {
             <Mark className="size-6" />
           </span>
           <span className="min-w-0 leading-tight">
-            <span className="block truncate font-display text-lg text-cream">{SITE.name}</span>
+            <span className="block truncate font-display text-lg text-cream">{campName}</span>
             <span className="block truncate text-xs text-muted">{SITE.place}</span>
           </span>
         </Link>
@@ -130,14 +130,14 @@ function Header() {
   );
 }
 
-function Footer() {
+function Footer({ campName }: { campName: string }) {
   return (
     <footer className="border-t border-line bg-panel">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
-          <p className="font-display text-2xl">{SITE.name}</p>
+          <p className="font-display text-2xl">{campName}</p>
           <p className="mt-1 text-sm text-muted" dir="ltr">
-            {SITE.nameEn} — North Gaza
+            {campName === SITE.name ? `${SITE.nameEn} — North Gaza` : "North Gaza"}
           </p>
           <p className="mt-4 text-sm leading-relaxed text-muted">{SITE.sloganAlt}</p>
         </div>

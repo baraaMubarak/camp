@@ -1,18 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageIntro, Shell } from "@/components/site-chrome";
-import { SITE } from "@/content/site";
 import { getPublicCamp } from "@/lib/camp.functions";
-import { categoryLabel } from "@/lib/camp-types";
+import { categoryLabel, DEFAULT_CAMP_NAME } from "@/lib/camp-types";
 import { formatDate } from "@/lib/format";
 
 export const Route = createFileRoute("/aid")({
   loader: () => getPublicCamp(),
-  head: () => ({
+  head: ({ loaderData }) => ({
     meta: [
-      { title: `توثيق المساعدات – ${SITE.name}` },
+      { title: `توثيق المساعدات – ${loaderData?.campName ?? DEFAULT_CAMP_NAME}` },
       {
         name: "description",
-        content: "سجل علني بما وصل إلى مخيم السلطان 1 من مواد، دون أسماء الأسر أو بيانات تكشف هويتها.",
+        content: `سجل علني بما وصل إلى ${loaderData?.campName ?? DEFAULT_CAMP_NAME} من مواد، دون أسماء الأسر أو بيانات تكشف هويتها.`,
       },
     ],
   }),
@@ -23,7 +22,7 @@ function AidPage() {
   const camp = Route.useLoaderData();
 
   return (
-    <Shell>
+    <Shell campName={camp.campName}>
       <main id="content">
         <PageIntro kicker="الشفافية" title="توثيق المساعدات">
           <p>

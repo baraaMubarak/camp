@@ -5,6 +5,7 @@ import {
   CHANNEL_KINDS,
   EMPTY_PUBLIC,
   EMPTY_STATS,
+  DEFAULT_CAMP_NAME,
   type AdminCamp,
   type AidItem,
   type CategoryId,
@@ -41,6 +42,7 @@ const statsSchema = z.object({
   statsPublished: z.boolean(),
   publicNote: z.string().max(400),
   notePublished: z.boolean(),
+  campName: z.string().trim().min(2).max(60),
 });
 
 const passSchema = z.object({
@@ -95,6 +97,7 @@ type SettingsRow = {
   stats_published: boolean | string | number;
   public_note: string | null;
   note_published: boolean | string | number;
+  camp_name?: string | null;
 };
 
 type AidRow = {
@@ -121,6 +124,12 @@ function fail(error: string): Err {
 
 function asBool(value: unknown): boolean {
   return value === true || value === "t" || value === "true" || value === 1;
+}
+
+function asName(value: unknown): string {
+  if (typeof value !== "string") return DEFAULT_CAMP_NAME;
+  const name = value.trim();
+  return name || DEFAULT_CAMP_NAME;
 }
 
 function asInt(value: unknown): number | null {
@@ -249,6 +258,7 @@ async function readAdmin(): Promise<AdminCamp> {
       stats: EMPTY_STATS,
       publicNote: "",
       notePublished: false,
+      campName: DEFAULT_CAMP_NAME,
       aid: aid.map(mapAid),
       channels: channels.map(mapChannel),
     };
@@ -259,24 +269,27 @@ async function readAdmin(): Promise<AdminCamp> {
     stats: mapStats(row),
     publicNote: row.public_note ?? "",
     notePublished: asBool(row.note_published),
+    campName: asName(row.camp_name),
     aid: aid.map(mapAid),
     channels: channels.map(mapChannel),
   };
 }
 
 function toPublic(admin: AdminCamp): PublicCamp {
-  if (!admin.claimed) return EMPTY_PUBLIC;
-  return {
-    statsPublished: admin.statsPublished,
-    stats: admin.statsPublished ? admin.stats : EMPTY_STATS,
-    note: admin.notePublished ? admin.publicNote.trim() || null : null,
-    aid: admin.aid
-      .filter((item) => item.published)
-      .map(({ published: _published, ...item }) => item),
-    channels: admin.channels
-      .filter((item) => item.published && item.confirmed)
-      .map(({ confirmed: _c, published: _p, ...item }) => item),
-  };
+  const base = admin.claimed
+    ? {
+        statsPublished: admin.statsPublished,
+        stats: admin.statsPublished ? admin.stats : EMPTY_STATS,
+        note: admin.notePublished ? admin.publicNote.trim() || null : null,
+        aid: admin.aid
+          .filter((item) => item.published)
+          .map(({ published: _published, ...item }) => item),
+        channels: admin.channels
+          .filter((item) => item.published && item.confirmed)
+          .map(({ confirmed: _c, published: _p, ...item }) => item),
+      }
+    : EMPTY_PUBLIC;
+  return { ...base, campName: admin.campName || DEFAULT_CAMP_NAME };
 }
 
 function validateNarrative(value: string, label: string): string | null {
@@ -402,6 +415,8 @@ export const saveCampSettings = createServerFn({ method: "POST" })
       }
       const noteProblem = note ? validateNarrative(note, "المستجد") : null;
       if (noteProblem) return fail(noteProblem);
+      const nameProblem = validateNarrative(data.campName, "اسم المخيم");
+      if (nameProblem) return fail(nameProblem);
 
       const sql = await sqlClient();
       await sql`
@@ -420,6 +435,7 @@ export const saveCampSettings = createServerFn({ method: "POST" })
           stats_published = ${data.statsPublished},
           public_note = ${note},
           note_published = ${data.notePublished},
+          camp_name = ${data.campName},
           updated_at = now()
         where id = 1
       `;
