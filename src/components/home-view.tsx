@@ -142,7 +142,7 @@ export function HomeView({ camp }: { camp: PublicCamp }) {
         </figure>
         <div>
           <p className="text-sm font-medium text-clay">عن المخيم</p>
-          <h2 className="mt-3 font-display text-4xl leading-tight">مخيم السلطان 1... حكايات من قلب شمال غزة</h2>
+          <h2 className="mt-3 font-display text-4xl leading-tight">مخيم المجد والإحسان... حكايات من قلب شمال غزة</h2>
           <div className="mt-5 space-y-4 text-base leading-relaxed text-muted">
             {ABOUT_PARAS.map((para) => (
               <p key={para.slice(0, 24)}>{para}</p>
