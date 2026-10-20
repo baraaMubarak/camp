@@ -3,7 +3,7 @@ import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "مخيم السلطان 1 – شمال غزة";
+const APP_NAME = "مخيم المجد والإحسان – شمال غزة";
 
 export const Route = createRootRoute({
   head: () => ({
